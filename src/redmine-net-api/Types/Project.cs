@@ -170,7 +170,7 @@ namespace Redmine.Net.Api.Types
                 {
                     case RedmineKeys.ID: Id = reader.ReadElementContentAsInt(); break;
                     case RedmineKeys.CREATED_ON: CreatedOn = reader.ReadElementContentAsNullableDateTime(); break;
-                    case RedmineKeys.CUSTOM_FIELDS: CustomFields = reader.ReadElementContentAsCollection<IssueCustomField>(); break;
+                    case RedmineKeys.ISSUE_CUSTOM_FIELDS: CustomFields = reader.ReadElementContentAsCollection<IssueCustomField>(); break;
                     case RedmineKeys.DESCRIPTION: Description = reader.ReadElementContentAsString(); break;
                     case RedmineKeys.ENABLED_MODULES: EnabledModules = reader.ReadElementContentAsCollection<ProjectEnabledModule>(); break;
                     case RedmineKeys.HOMEPAGE: HomePage = reader.ReadElementContentAsString(); break;
@@ -211,7 +211,7 @@ namespace Redmine.Net.Api.Types
 
             if (Id == 0)
             {
-                writer.WriteRepeatableElement(RedmineKeys.ISSUE_CUSTOM_FIELD_IDS, (IEnumerable<IValue>)CustomFields);
+                writer.WriteRepeatableElement(RedmineKeys.ISSUE_CUSTOM_FIELDS, (IEnumerable<IValue>)CustomFields);
                 return;
             }
 
@@ -285,7 +285,7 @@ namespace Redmine.Net.Api.Types
 
                 if (Id == 0)
                 {
-                    writer.WriteRepeatableElement(RedmineKeys.ISSUE_CUSTOM_FIELD_IDS, (IEnumerable<IValue>)CustomFields);
+                    writer.WriteRepeatableElement(RedmineKeys.ISSUE_CUSTOM_FIELDS, (IEnumerable<IValue>)CustomFields);
                     return;
                 }
 

@@ -21,5 +21,6 @@ internal class ByteArrayApiRequestMessageContent : ApiRequestMessageContent
     public ByteArrayApiRequestMessageContent(byte[] content)
     {
         Body = content;
+        ContentType = RedmineConstants.CONTENT_TYPE_APPLICATION_STREAM;
     }
 }

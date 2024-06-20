@@ -268,6 +268,10 @@ namespace Redmine.Net.Api
         /// <summary>
         /// 
         /// </summary>
+        public const string FIELD = "field";
+        /// <summary>
+        /// 
+        /// </summary>
         public const string FIELD_FORMAT = "field_format";
         /// <summary>
         /// 
@@ -362,7 +366,7 @@ namespace Redmine.Net.Api
         /// <summary>
         /// 
         /// </summary>
-        public const string ISSUE_CUSTOM_FIELD_IDS = "issue_custom_field_ids";
+        public const string ISSUE_CUSTOM_FIELDS = "issue_custom_fields";
         /// <summary>
         /// 
         /// </summary>
@@ -849,6 +853,10 @@ namespace Redmine.Net.Api
         /// 
         /// </summary>
         public const string WIKI_PAGES = "wiki_pages";
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string ENABLED_STANDARD_FIELDS = "enabled_standard_fields";
 
        
     }

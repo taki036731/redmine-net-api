@@ -178,6 +178,22 @@ namespace Redmine.Net.Api
         }
 
         /// <summary>
+        /// Redmineのルートパス
+        /// </summary>
+        public string RootPath { get; private set; }
+
+        /// <summary>
+        /// ルートパスを設定する
+        /// </summary>
+        /// <param name="rootPath"></param>
+        /// <returns></returns>
+        public RedmineManagerOptionsBuilder WithRootPath(string  rootPath)
+        {
+            RootPath = rootPath;
+            return this;
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         public Version Version { get; set; }
@@ -201,7 +217,7 @@ namespace Redmine.Net.Api
         {
             ClientOptions ??= new RedmineWebClientOptions();
             
-            var baseAddress = CreateRedmineUri(Host, ClientOptions.Scheme);
+            var baseAddress = CreateRedmineUri(Host, ClientOptions.Scheme, RootPath);
             
             var options = new RedmineManagerOptions()
             {
@@ -268,7 +284,7 @@ namespace Redmine.Net.Api
             }
         }
         
-        internal static Uri CreateRedmineUri(string host, string scheme = null)
+        internal static Uri CreateRedmineUri(string host, string scheme = null, string root = null)
         {
             if (host.IsNullOrWhiteSpace() || host.Equals("string.Empty", StringComparison.OrdinalIgnoreCase))
             {
@@ -361,6 +377,10 @@ namespace Redmine.Net.Api
                     uriBuilder.Scheme = uri.Scheme;
                     uriBuilder.Port = int.TryParse(uri.LocalPath, out var port) ? port : uri.Port;
                     uriBuilder.Host = uri.Host;
+                }
+                if (!string.IsNullOrWhiteSpace(root))
+                {
+                    uriBuilder.Path = root;
                 }
             }
 

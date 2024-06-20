@@ -131,7 +131,7 @@ namespace Redmine.Net.Api.Net.WebClient
         public ApiResponseMessage Upload(string address, byte[] data, RequestOptions requestOptions = null)
         {
             var content = new ByteArrayApiRequestMessageContent(data);
-            return HandleRequest(address, HttpVerbs.UPLOAD, requestOptions, content);
+            return HandleRequest(address, HttpVerbs.POST, requestOptions, content);
         }
 
         #if !(NET20)

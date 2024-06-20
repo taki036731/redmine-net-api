@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.34916.146
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "redmine-net-api", "src\redmine-net-api\redmine-net-api.csproj", "{E955CF52-3F03-46A6-9B72-420726AE1FCD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sample", "sample\sample.csproj", "{CEA0AE5A-09F5-412E-848F-58CE72C8F114}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		DebugJson|Any CPU = DebugJson|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E955CF52-3F03-46A6-9B72-420726AE1FCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E955CF52-3F03-46A6-9B72-420726AE1FCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E955CF52-3F03-46A6-9B72-420726AE1FCD}.DebugJson|Any CPU.ActiveCfg = DebugJson|Any CPU
+		{E955CF52-3F03-46A6-9B72-420726AE1FCD}.DebugJson|Any CPU.Build.0 = DebugJson|Any CPU
+		{E955CF52-3F03-46A6-9B72-420726AE1FCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E955CF52-3F03-46A6-9B72-420726AE1FCD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CEA0AE5A-09F5-412E-848F-58CE72C8F114}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CEA0AE5A-09F5-412E-848F-58CE72C8F114}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CEA0AE5A-09F5-412E-848F-58CE72C8F114}.DebugJson|Any CPU.ActiveCfg = Debug|Any CPU
+		{CEA0AE5A-09F5-412E-848F-58CE72C8F114}.DebugJson|Any CPU.Build.0 = Debug|Any CPU
+		{CEA0AE5A-09F5-412E-848F-58CE72C8F114}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CEA0AE5A-09F5-412E-848F-58CE72C8F114}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D7E10C0C-0862-43D7-A3F8-23D13B8DFD3F}
+	EndGlobalSection
+EndGlobal

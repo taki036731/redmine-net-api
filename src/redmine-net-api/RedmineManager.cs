@@ -129,6 +129,15 @@ namespace Redmine.Net.Api
         }
 
         /// <inheritdoc />
+        public List<T> GetChildren<T>(string ownerId, RequestOptions requestOptions = null) 
+            where T : class, new()
+        {
+            var uri = RedmineApiUrls.GetListFragment<T>(ownerId);
+            
+            return GetObjects<T>(uri, requestOptions);
+        }
+
+        /// <inheritdoc />
         public PagedResults<T> GetPaginated<T>(RequestOptions requestOptions = null) 
             where T : class, new()
         {
@@ -171,11 +180,11 @@ namespace Redmine.Net.Api
         }
 
         /// <inheritdoc />
-        public Upload UploadFile(byte[] data)
+        public Upload UploadFile(byte[] data, RequestOptions requestOptions = null)
         {
             var url = RedmineApiUrls.UploadFragment();
 
-            var response = ApiClient.Upload(url, data);
+            var response = ApiClient.Upload(url, data, requestOptions);
             
             return response.DeserializeTo<Upload>(Serializer);
         }

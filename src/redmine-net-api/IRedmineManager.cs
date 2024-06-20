@@ -103,7 +103,7 @@ public partial interface IRedmineManager
     ///     Returns the token for uploaded file.
     /// </returns>
     /// <exception cref="RedmineException"></exception>
-    Upload UploadFile(byte[] data);
+    Upload UploadFile(byte[] data, RequestOptions requestOptions = null);
         
     /// <summary>
     ///     Downloads a file from the specified address.
