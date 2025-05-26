@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
 using System.Xml;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
@@ -58,7 +59,7 @@ namespace Redmine.Net.Api.Types
             Name = reader.GetAttribute(RedmineKeys.NAME);
             Multiple = reader.ReadAttributeAsBoolean(RedmineKeys.MULTIPLE);
 
-            reader.Read();
+            // reader.Read();
 
             if (reader.NodeType == XmlNodeType.Whitespace)
             {
@@ -76,25 +77,46 @@ namespace Redmine.Net.Api.Types
                 return;
             }
 
-            var attributeExists = !reader.GetAttribute("type").IsNullOrWhiteSpace();
 
+            if (reader.IsEmptyElement)
+            {
+                reader.Read();
+                return;
+            }
+
+            reader.Read();
+            var attributeExists = !reader.GetAttribute("type").IsNullOrWhiteSpace();
             if (!attributeExists)
             {
-                if (reader.IsEmptyElement)
-                {
-                    reader.Read();
-                    return;
-                }
-
                 Values = new List<CustomFieldValue>
                 {
                     new CustomFieldValue(reader.ReadElementContentAsString())
                 };
             }
             else
-            {
                 Values = reader.ReadElementContentAsCollection<CustomFieldValue>();
-            }
+
+
+            //var attributeExists = !reader.GetAttribute("type").IsNullOrWhiteSpace();
+
+            //if (!attributeExists)
+            //{
+            //    if (reader.IsEmptyElement)
+            //    {
+            //        reader.Read();
+            //        return;
+            //    }
+
+            //    reader.Read();
+            //    Values = new List<CustomFieldValue>
+            //    {
+            //        new CustomFieldValue(reader.ReadElementContentAsString())
+            //    };
+            //}
+            //else
+            //{
+            //    Values = reader.ReadElementContentAsCollection<CustomFieldValue>();
+            //}
         }
 
         /// <summary>
@@ -103,7 +125,7 @@ namespace Redmine.Net.Api.Types
         /// <param name="writer"></param>
         public override void WriteXml(XmlWriter writer)
         {
-            if (Values == null)
+            if (Values == null || !Values.Any())
             {
                 return;
             }
@@ -115,6 +137,12 @@ namespace Redmine.Net.Api.Types
             if (itemsCount > 1)
             {
                 writer.WriteArrayStringElement(RedmineKeys.VALUE, Values, GetValue);
+            }
+            else if (Values[0].IsToken && !Values[0].Info.IsNullOrWhiteSpace())
+            {
+                writer.WriteStartElement(RedmineKeys.VALUE);
+                writer.WriteElementString(RedmineKeys.TOKEN, Values[0].Info);
+                writer.WriteEndElement();
             }
             else
             {

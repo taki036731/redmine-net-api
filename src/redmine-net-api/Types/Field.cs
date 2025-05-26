@@ -29,39 +29,16 @@ namespace Redmine.Net.Api.Types
     /// 
     /// </summary>
     [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
-    [XmlRoot(RedmineKeys.VALUE)]
-    public class CustomFieldValue : IXmlSerializable, IJsonSerializable, IEquatable<CustomFieldValue>, ICloneable
+    [XmlRoot(RedmineKeys.FIELD)]
+    #pragma warning disable CA1711
+    public sealed class Field : IXmlSerializable, IJsonSerializable, IEquatable<Field>
+    #pragma warning restore CA1711
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        public CustomFieldValue()
-        {
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="token"></param>
-        /// <param name="value"></param>
-        public CustomFieldValue(string value, bool token = false)
-        {
-            Info = value;
-            IsToken = token;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public bool IsToken { get; private set; }
-
         #region Properties
-
         /// <summary>
         /// 
         /// </summary>
-        public string Info { get; set; }
-
+        public string Info { get; internal set; }
         #endregion
 
         #region Implementation of IXmlSerializable
@@ -70,10 +47,7 @@ namespace Redmine.Net.Api.Types
         /// 
         /// </summary>
         /// <returns></returns>
-        public XmlSchema GetSchema()
-        {
-            return null;
-        }
+        public XmlSchema GetSchema() { return null; }
 
         /// <summary>
         /// 
@@ -81,24 +55,10 @@ namespace Redmine.Net.Api.Types
         /// <param name="reader"></param>
         public void ReadXml(XmlReader reader)
         {
-            while (!reader.EOF)
+            reader.Read();
+            if (reader.NodeType == XmlNodeType.Text)
             {
-                if (reader.IsEmptyElement)
-                {
-                    reader.Read();
-                    continue;
-                }
-
-                switch (reader.Name)
-                {
-                    case RedmineKeys.VALUE:
-                        Info = reader.ReadElementContentAsString();
-                        break;
-
-                    default:
-                        reader.Read();
-                        break;
-                }
+                Info = reader.Value;
             }
         }
 
@@ -106,28 +66,20 @@ namespace Redmine.Net.Api.Types
         /// 
         /// </summary>
         /// <param name="writer"></param>
-        public void WriteXml(XmlWriter writer)
-        {
-        }
+        public void WriteXml(XmlWriter writer) { }
 
         #endregion
 
         #region Implementation of IJsonSerialization
-
         /// <summary>
         /// 
         /// </summary>
         /// <param name="reader"></param>
         public void ReadJson(JsonReader reader)
         {
-            if (reader.TokenType == JsonToken.PropertyName)
-            {
-                return;
-            }
-
             if (reader.TokenType == JsonToken.String)
             {
-                Info = reader.Value as string;
+                Info = reader.Value.ToString();
             }
         }
 
@@ -135,23 +87,18 @@ namespace Redmine.Net.Api.Types
         /// 
         /// </summary>
         /// <param name="writer"></param>
-        public void WriteJson(JsonWriter writer)
-        {
-        }
-
+        public void WriteJson(JsonWriter writer) { }
         #endregion
 
-        #region Implementation of IEquatable<CustomFieldValue>
-
+        #region Implementation of IEquatable<Field>
         /// <summary>
         /// 
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public bool Equals(CustomFieldValue other)
+        public bool Equals(Field other)
         {
-            if (other == null) return false;
-            return string.Equals(Info,other.Info,StringComparison.OrdinalIgnoreCase);
+            return other != null && Info == other.Info;
         }
 
         /// <summary>
@@ -164,7 +111,7 @@ namespace Redmine.Net.Api.Types
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != GetType()) return false;
-            return Equals(obj as CustomFieldValue);
+            return Equals(obj as Field);
         }
 
         /// <summary>
@@ -180,28 +127,13 @@ namespace Redmine.Net.Api.Types
                 return hashCode;
             }
         }
-
-        #endregion
-
-        #region Implementation of IClonable
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public object Clone()
-        {
-            var customFieldValue = new CustomFieldValue {Info = Info};
-            return customFieldValue;
-        }
-
         #endregion
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        private string DebuggerDisplay => $"[{nameof(CustomFieldValue)}: {Info}]";
+        private string DebuggerDisplay => $"[{nameof(Field)}: {Info}]";
 
     }
 }

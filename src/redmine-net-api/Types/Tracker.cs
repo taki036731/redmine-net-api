@@ -15,10 +15,13 @@
 */
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Xml;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Redmine.Net.Api.Extensions;
 using Redmine.Net.Api.Internals;
 
@@ -40,6 +43,11 @@ namespace Redmine.Net.Api.Types
         /// Gets the description of this tracker.
         /// </summary>
         public string Description { get; internal set; }
+
+        /// <summary>
+        /// Get the enabled fields of this tracker.
+        /// </summary>
+        public IList<Field> EnabledStandardFields { get; internal set; }
 
         #region Implementation of IXmlSerialization
         /// <summary>
@@ -63,6 +71,7 @@ namespace Redmine.Net.Api.Types
                     case RedmineKeys.NAME: Name = reader.ReadElementContentAsString(); break;
                     case RedmineKeys.DEFAULT_STATUS: DefaultStatus = new IdentifiableName(reader); break;
                     case RedmineKeys.DESCRIPTION: Description = reader.ReadElementContentAsString(); break;
+                    case RedmineKeys.ENABLED_STANDARD_FIELDS: EnabledStandardFields = reader.ReadElementContentAsCollection<Field>(); break;
                     default: reader.Read(); break;
                 }
             }
@@ -95,6 +104,7 @@ namespace Redmine.Net.Api.Types
                     case RedmineKeys.NAME: Name = reader.ReadAsString(); break;
                     case RedmineKeys.DEFAULT_STATUS: DefaultStatus = new IdentifiableName(reader); break;
                     case RedmineKeys.DESCRIPTION: Description = reader.ReadAsString(); break;
+                    case RedmineKeys.ENABLED_STANDARD_FIELDS: EnabledStandardFields = reader.ReadAsCollection<Field>(); break;
                     default: reader.Read(); break;
                 }
             }
@@ -140,6 +150,7 @@ namespace Redmine.Net.Api.Types
                 var hashCode = 13;
                 hashCode = HashCodeHelper.GetHashCode(Id, hashCode);
                 hashCode = HashCodeHelper.GetHashCode(Name, hashCode);
+                hashCode = HashCodeHelper.GetHashCode(EnabledStandardFields, hashCode);
                 return hashCode;
             }
         }

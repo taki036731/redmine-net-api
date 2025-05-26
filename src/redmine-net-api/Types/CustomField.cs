@@ -73,6 +73,10 @@ namespace Redmine.Net.Api.Types
         /// 
         /// </summary>
         public bool Searchable { get; internal set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Description { get; internal set; }
 
         /// <summary>
         /// 
@@ -139,6 +143,7 @@ namespace Redmine.Net.Api.Types
                     case RedmineKeys.SEARCHABLE: Searchable = reader.ReadElementContentAsBoolean(); break;
                     case RedmineKeys.TRACKERS: Trackers = reader.ReadElementContentAsCollection<TrackerCustomField>(); break;
                     case RedmineKeys.VISIBLE: Visible = reader.ReadElementContentAsBoolean(); break;
+                    case RedmineKeys.DESCRIPTION: Description = reader.ReadElementContentAsString().Trim(); break;
                     default: reader.Read(); break;
                 }
             }
@@ -206,13 +211,13 @@ namespace Redmine.Net.Api.Types
                 && Multiple == other.Multiple
                 && Searchable == other.Searchable
                 && Visible == other.Visible
-                && string.Equals(CustomizedType,other.CustomizedType, StringComparison.OrdinalIgnoreCase)
-                && string.Equals(DefaultValue,other.DefaultValue, StringComparison.OrdinalIgnoreCase)
-                && string.Equals(FieldFormat,other.FieldFormat, StringComparison.OrdinalIgnoreCase)
+                && string.Equals(CustomizedType, other.CustomizedType, StringComparison.OrdinalIgnoreCase)
+                && string.Equals(DefaultValue, other.DefaultValue, StringComparison.OrdinalIgnoreCase)
+                && string.Equals(FieldFormat, other.FieldFormat, StringComparison.OrdinalIgnoreCase)
                 && MaxLength == other.MaxLength
                 && MinLength == other.MinLength
-                && string.Equals(Name,other.Name, StringComparison.OrdinalIgnoreCase)
-                && string.Equals(Regexp,other.Regexp, StringComparison.OrdinalIgnoreCase)
+                && string.Equals(Name, other.Name, StringComparison.OrdinalIgnoreCase)
+                && string.Equals(Regexp, other.Regexp, StringComparison.OrdinalIgnoreCase)
                 && PossibleValues.Equals(other.PossibleValues)
                 && Roles.Equals(other.Roles)
                 && Trackers.Equals(other.Trackers);
